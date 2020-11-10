@@ -23,7 +23,7 @@ promise.then((db) =>{
     });
 });
 
-
+console.log("test");
 
 
 //Configuration :
