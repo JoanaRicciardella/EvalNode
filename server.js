@@ -2,11 +2,11 @@
 const express = require('express'); //pour definir les routes
 const uri = "mongodb+srv://admin:admin@cluster0.c3vm4.mongodb.net/Cluster0?retryWrites=true&w=majority";//connexion MongoDB
 const mongoose= require('mongoose');
+mongoose.set('useUnifiedTopology', true);
 const bodyParser = require('body-parser'); //pour convertir la chaine de caractere
 const ecole = require('./model/modelecole');
 const prof = require('./model/modelprof');
 const eleve = require('./model/modeleleve');
-
 
 
 //Demarrage du server :
@@ -23,7 +23,7 @@ promise.then((db) =>{
     });
 });
 
-console.log("test");
+
 
 
 //Configuration :
@@ -32,6 +32,8 @@ app.use('/js', express.static('./client/js'));
 app.use('/css', express.static('./client/css'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+mongoose.set('useFindAndModify', false);
+
 
 
 
@@ -176,7 +178,7 @@ app.put('/ecole/:id', (req, res) =>{
 
 
 app.put('/eleve/:id', (req, res) =>{
-    eleve.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}, (err, obj) =>{
+    eleve.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true, }, (err, obj) =>{
      if(err){
         console.log(err);
         return res.send(500);
